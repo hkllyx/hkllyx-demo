@@ -42,7 +42,7 @@ public class Horse implements Runnable {
                 barrier.await();
             }
         } catch (InterruptedException e) {
-            System.out.println(this.toString() + "Interrupted");
+            System.out.println(this + "Interrupted");
         } catch (BrokenBarrierException e) {
             e.printStackTrace();
         }

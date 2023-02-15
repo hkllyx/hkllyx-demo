@@ -8,21 +8,15 @@ package com.hkllyx.demo.basic.concurrent.thread;
  * @author HKLLY
  * @date 2019/4/10
  */
-public class DaemonDemo implements Runnable {
-    private static int counter = 0;
-    private int id = counter++;
-
-    @Override
-    public void run() {
-        while (true) {
-            System.out.println("守护线程执行中");
-        }
-    }
+public class DaemonThreadDemo {
 
     public static void main(String[] args) throws InterruptedException {
-        Thread daemon = new Thread(new DaemonDemo());
-        daemon.setDaemon(true);
-        daemon.start();
+        DaemonThreadFactory factory = new DaemonThreadFactory();
+        factory.newThread(() -> {
+            while (true) {
+                System.out.println("守护线程执行中");
+            }
+        }).start();
         Thread.sleep(10);
         // 退出主线程，因为调度器的时间不是非常精确，所以守护线程肯不会立即停止
         System.out.println("------------------退出主线程----------------");

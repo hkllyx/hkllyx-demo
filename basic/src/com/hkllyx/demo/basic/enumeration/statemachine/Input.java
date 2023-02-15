@@ -42,7 +42,7 @@ public enum Input {
         }
     };
 
-    private static final Random rand = new Random(47);
+    private static final Random RANDOM = new Random(47);
     int value;
 
     Input(int value) {
@@ -54,7 +54,7 @@ public enum Input {
 
     public static Input randomSelection() {
         //  Don't include STOP:
-        return values()[rand.nextInt(values().length - 1)];
+        return values()[RANDOM.nextInt(values().length - 1)];
     }
 
     int amount() {

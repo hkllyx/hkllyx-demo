@@ -10,7 +10,7 @@ public class PrioritizedTaskConsumer implements Runnable {
     /**
      * 消费者任务优先级队列（线程安全）
      */
-    private PriorityBlockingQueue<Runnable> queue;
+    private final PriorityBlockingQueue<Runnable> queue;
 
     public PrioritizedTaskConsumer(PriorityBlockingQueue<Runnable> queue) {
         this.queue = queue;

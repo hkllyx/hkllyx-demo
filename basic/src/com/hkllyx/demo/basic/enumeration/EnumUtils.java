@@ -9,7 +9,7 @@ import java.util.Random;
  * @date 2019/4/8
  */
 public class EnumUtils {
-    private static final Random rand = new Random(47);
+    private static final Random RANDOM = new Random(47);
 
     private EnumUtils() {
     }
@@ -34,6 +34,6 @@ public class EnumUtils {
      * @return 字段中任一个
      */
     public static <T> T random(T[] values) {
-        return values[rand.nextInt(values.length)];
+        return values[RANDOM.nextInt(values.length)];
     }
 }

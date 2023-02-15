@@ -25,8 +25,8 @@ public class HorseRace {
         SIDE_LINE = sb.toString();
     }
 
-    private List<Horse> horses;
-    private ExecutorService pool;
+    private final List<Horse> horses;
+    private final ExecutorService pool;
 
     public HorseRace(int nHorses, int pause) {
         horses = new ArrayList<>();

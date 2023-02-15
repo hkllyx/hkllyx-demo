@@ -40,7 +40,7 @@ public class Mail {
      * 邮件的标识
      */
     private static long counter = 0;
-    private long id = counter++;
+    private final long id = counter++;
     /**
      * 是否正常被递送
      */

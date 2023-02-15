@@ -1,6 +1,6 @@
 package com.hkllyx.demo.basic.concurrent.executor.executors;
 
-import com.hkllyx.demo.basic.concurrent.thread.DaemonThreadFactoryDemo;
+import com.hkllyx.demo.basic.concurrent.thread.DaemonThreadFactory;
 import com.hkllyx.demo.basic.concurrent.thread.MyThread;
 
 import java.util.concurrent.ExecutorService;
@@ -18,7 +18,7 @@ import java.util.concurrent.ThreadFactory;
  */
 public class FixedThreadPool {
     public static void main(String[] args) {
-        ThreadFactory factory = new DaemonThreadFactoryDemo();
+        ThreadFactory factory = new DaemonThreadFactory();
         // 一次性预先执行代价高昂的线程分配，限制线程数量。
         // 第一个参数为线程池中线程数量
         // 第二个参数为线程工厂，可以省去，使用Executors的默认线程工厂

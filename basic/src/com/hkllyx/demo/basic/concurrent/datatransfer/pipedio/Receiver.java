@@ -17,9 +17,10 @@ public class Receiver implements Runnable {
     @Override
     public void run() {
         try {
+            System.out.print("Read: ");
             while (true) {
                 // 接受char
-                System.out.print("Read: " + (char) in.read() + ",");
+                System.out.print((char) in.read() + ", ");
             }
         } catch (IOException e) {
             System.out.println("\nReceiver IOException");

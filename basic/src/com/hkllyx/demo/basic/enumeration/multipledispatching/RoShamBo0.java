@@ -12,7 +12,7 @@ import java.util.Random;
  * @date 2019-07-10
  */
 public class RoShamBo0 {
-    private static final Random rand = new Random(47);
+    private static final Random RANDOM = new Random(47);
 
     public static void main(String[] args) {
         RoShamBo0 rsb = new RoShamBo0();
@@ -27,7 +27,7 @@ public class RoShamBo0 {
      * @return 石头剪刀布中任一个
      */
     public Item newItem() {
-        switch (rand.nextInt(3)) {
+        switch (RANDOM.nextInt(3)) {
             case 0:
                 return new Paper();
             case 1:

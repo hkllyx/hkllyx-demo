@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class MutexEvenGenerator extends IntGenerator {
     private int currentEvenValue = 0;
-    private Lock lock = new ReentrantLock();
+    private final Lock lock = new ReentrantLock();
 
     public static void main(String[] args) {
         EvenChecker.test(new MutexEvenGenerator(), 10);

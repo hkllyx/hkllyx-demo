@@ -14,21 +14,22 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @date 2019-07-11
  */
 public class AtomicIntegerDemo {
-    private static int money = 100000;
-    private static AtomicInteger aMoney = new AtomicInteger(money);
+    static int money = 100000;
+    static volatile int vMoney = money;
 
     public static void main(String[] args) throws InterruptedException {
-        int steps = money;
+        AtomicInteger aMoney = new AtomicInteger(money);
         ExecutorService pool = ExecutorUtils.newCachedThreadPool();
-        for (int i = 0; i < steps; i++) {
-            pool.execute(() -> aMoney.decrementAndGet());
-        }
+        int steps = money;
         for (int i = 0; i < steps; i++) {
             pool.execute(() -> money--);
+            pool.execute(() -> vMoney--);
+            pool.execute(() -> aMoney.decrementAndGet());
         }
         TimeUnit.MILLISECONDS.sleep(500);
-        System.out.println("At the end aMoney is: " + aMoney);
         System.out.println("At the end money is: " + money);
+        System.out.println("At the end vMoney is: " + vMoney);
+        System.out.println("At the end aMoney is: " + aMoney);
         pool.shutdown();
     }
 }

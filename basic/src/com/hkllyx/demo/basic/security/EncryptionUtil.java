@@ -23,10 +23,10 @@ public class EncryptionUtil {
     private static final String RSA_ALGORITHM = "rsa";
     private static final String SIGN_ALGORITHM = "MD5withRSA";
     
-    private final static MessageDigest md5 = initMD5();
-    private final static BASE64Encoder base64Encoder = new BASE64Encoder();
-    private final static BASE64Decoder base64Decoder = new BASE64Decoder();
-    private final static KeyPair rsaKeyPair = createRsaKeyPair();
+    private final static MessageDigest MD5 = initMD5();
+    private final static BASE64Encoder BASE64_ENCODER = new BASE64Encoder();
+    private final static BASE64Decoder BASE64_DECODER = new BASE64Decoder();
+    private final static KeyPair RSA_KEY_PAIR = createRsaKeyPair();
 
     private static MessageDigest initMD5() {
         MessageDigest messageDigest = null;
@@ -47,7 +47,7 @@ public class EncryptionUtil {
      * @return 密文
      */
     public static String encryptMd5(String plainText) {
-        byte[] cipherData = md5.digest(plainText.getBytes());
+        byte[] cipherData = MD5.digest(plainText.getBytes());
         //将摘要转换成16进制字符串
         StringBuilder sb = new StringBuilder();
         for (byte cipher : cipherData) {
@@ -67,7 +67,7 @@ public class EncryptionUtil {
      * @return 密文
      */
     public static String encryptBase64(String plainText) {
-        return base64Encoder.encode(plainText.getBytes());
+        return BASE64_ENCODER.encode(plainText.getBytes());
     }
     
     /**
@@ -78,7 +78,7 @@ public class EncryptionUtil {
      * @throws IOException IOException
      */
     public static String decryptBase64(String cipherText) throws IOException {
-        return new String(base64Decoder.decodeBuffer(cipherText));
+        return new String(BASE64_DECODER.decodeBuffer(cipherText));
     }
     
     /**
@@ -97,7 +97,7 @@ public class EncryptionUtil {
         byte[] cipherData = processCipher
                 (plainData, DES_ALGORITHM, Cipher.ENCRYPT_MODE, createDesKey(key));
         //再使用BASE64加密
-        return base64Encoder.encode(cipherData);
+        return BASE64_ENCODER.encode(cipherData);
     }
     
     /**
@@ -110,7 +110,7 @@ public class EncryptionUtil {
      */
     public static String decryptDes(String cipherText, String key) throws IOException {
         //获取加密数据
-        byte[] cipherData = base64Decoder.decodeBuffer(cipherText);
+        byte[] cipherData = BASE64_DECODER.decodeBuffer(cipherText);
         //获取解密数据
         byte[] plainData = processCipher
                 (cipherData, DES_ALGORITHM, Cipher.DECRYPT_MODE, createDesKey(key));
@@ -144,7 +144,7 @@ public class EncryptionUtil {
      */
     public static String decryptRsa(String cipherText, PublicKey key) throws IOException {
         // 获取加密数据
-        byte[] cipherData = base64Decoder.decodeBuffer(cipherText);
+        byte[] cipherData = BASE64_DECODER.decodeBuffer(cipherText);
         // 获取解密数据
         byte[] plainData = processCipher(cipherData, RSA_ALGORITHM, Cipher.DECRYPT_MODE, key);
         // 解密
@@ -186,7 +186,7 @@ public class EncryptionUtil {
         //初始化验证
         signature.initVerify(key);
         //更新验证数据
-        byte[] cipherData = base64Decoder.decodeBuffer(cipherText);
+        byte[] cipherData = BASE64_DECODER.decodeBuffer(cipherText);
         signature.update(cipherData);
         //验证
         return signature.verify(signData);

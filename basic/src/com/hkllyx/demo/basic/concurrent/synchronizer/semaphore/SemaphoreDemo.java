@@ -39,11 +39,11 @@ public class SemaphoreDemo {
                 System.out.println("阻塞线程被取消");
             }
         });
-        TimeUnit.MILLISECONDS.sleep(20);
+        TimeUnit.SECONDS.sleep(1);
         //  取消阻塞的线程
         blocked.cancel(true);
         // 签入list中的Item
-        System.out.println("签入 " + list);
+        System.out.println("开始签入");
         for (Item i : list) {
             pool.checkIn(i);
         }

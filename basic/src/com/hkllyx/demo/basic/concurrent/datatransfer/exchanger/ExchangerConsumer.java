@@ -28,7 +28,7 @@ public class ExchangerConsumer<T> implements Runnable {
                 Iterator<T> it = holder.iterator();
                 while (it.hasNext()) {
                     value = it.next();
-                    holder.remove(value);
+                    it.remove();
                 }
             }
         } catch (InterruptedException e) {

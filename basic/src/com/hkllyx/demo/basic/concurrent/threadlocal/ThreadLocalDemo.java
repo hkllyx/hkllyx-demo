@@ -16,24 +16,24 @@ import java.util.concurrent.TimeUnit;
  * @date 2019-07-12
  */
 public class ThreadLocalDemo {
-    private static final ThreadLocal<Integer> local = new ThreadLocal<>();
+    private static final ThreadLocal<Integer> THREAD_LOCAL = new ThreadLocal<>();
 
     public static void main(String[] args) throws InterruptedException {
         //  虽然 local 在 main 线程设置了值，但是在其他线程仍是无法访问，
         //  且在其他线程重写设置了 local 的值并不会影响当前线程的 local
-        local.set(10);
+        THREAD_LOCAL.set(10);
         int nThread = 5;
         ExecutorService pool = ExecutorUtils.newFixedThreadPool(nThread);
         for (int i = 0; i < nThread; i++) {
-            pool.execute(new ThreadLocalTask(local));
+            pool.execute(new ThreadLocalTask(THREAD_LOCAL));
         }
         pool.shutdown();
         if (!pool.awaitTermination(100, TimeUnit.MILLISECONDS)) {
             System.out.println("Force terminate pool.");
             pool.shutdownNow();
         }
-        System.out.println(Thread.currentThread().getName() + ": " + local.get());
-        local.remove();
+        System.out.println(Thread.currentThread().getName() + ": " + THREAD_LOCAL.get());
+        THREAD_LOCAL.remove();
     }
 }
 

@@ -36,12 +36,10 @@ public class DeadLockDemo {
                     e.printStackTrace();
                 }
                 System.out.println("Thread-2 等待 src1.");
-                synchronized (src2) {
+                synchronized (src1) {
                     System.out.println("Thread-2 获取到了 src1.");
                 }
             }
         }).start();
-
-        //  结果并没有产生死锁？？？
     }
 }

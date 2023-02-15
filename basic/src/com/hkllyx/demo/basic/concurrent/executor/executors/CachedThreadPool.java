@@ -1,6 +1,6 @@
 package com.hkllyx.demo.basic.concurrent.executor.executors;
 
-import com.hkllyx.demo.basic.concurrent.thread.DaemonThreadFactoryDemo;
+import com.hkllyx.demo.basic.concurrent.thread.DaemonThreadFactory;
 import com.hkllyx.demo.basic.concurrent.thread.MyThread;
 
 import java.util.concurrent.ExecutorService;
@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
 public class CachedThreadPool {
     public static void main(String[] args) {
         // ThreadFactory参数可以忽略
-        ExecutorService pool = Executors.newCachedThreadPool(new DaemonThreadFactoryDemo());
+        ExecutorService pool = Executors.newCachedThreadPool(new DaemonThreadFactory());
         for (int i = 0; i < 5; i++) {
             pool.execute(new MyThread());
         }

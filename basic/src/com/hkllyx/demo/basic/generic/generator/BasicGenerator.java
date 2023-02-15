@@ -7,7 +7,7 @@ package com.hkllyx.demo.basic.generic.generator;
  * @date 2019/4/14
  */
 public class BasicGenerator<T> implements Generator<T> {
-    private Class<T> type;
+    private final Class<T> type;
 
     public BasicGenerator(Class<T> type) {
         this.type = type;

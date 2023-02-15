@@ -1,6 +1,6 @@
 package com.hkllyx.demo.basic.concurrent.executor.executors;
 
-import com.hkllyx.demo.basic.concurrent.thread.DaemonThreadFactoryDemo;
+import com.hkllyx.demo.basic.concurrent.thread.DaemonThreadFactory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,7 +17,7 @@ public class SingleThreadExecutor {
     public static void main(String[] args) {
         // 相当于线程为1的FixedThreadPool
         // ThreadFactory参数可不写
-        ExecutorService exec = Executors.newSingleThreadExecutor(new DaemonThreadFactoryDemo());
+        ExecutorService exec = Executors.newSingleThreadExecutor(new DaemonThreadFactory());
         for (int i = 0; i < 5; i++) {
             exec.execute(System.out::println);
         }

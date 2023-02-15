@@ -1,7 +1,5 @@
 package com.hkllyx.demo.basic.concurrent.datatransfer.blockingqueue.delayqueue;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -13,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 public class DelayedTask implements Runnable, Delayed {
     private static int counter = 0;
     private final int id = counter++;
-    private static List<DelayedTask> sequence = new ArrayList<>();
     /**
      * 延迟时间
      */
@@ -25,9 +22,7 @@ public class DelayedTask implements Runnable, Delayed {
 
     public DelayedTask(int delayInMilliSeconds) {
         delta = delayInMilliSeconds;
-        trigger = System.nanoTime() +
-                TimeUnit.NANOSECONDS.convert(delta, TimeUnit.MILLISECONDS);
-        sequence.add(this);
+        trigger = System.nanoTime() + TimeUnit.NANOSECONDS.convert(delta, TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -44,7 +39,7 @@ public class DelayedTask implements Runnable, Delayed {
 
     @Override
     public void run() {
-        System.out.println(this + " ");
+        System.out.println(this);
     }
 
     /**
@@ -76,7 +71,7 @@ public class DelayedTask implements Runnable, Delayed {
      * 结束时统计每个线程的启动延时
      */
     public static class EndSentinel extends DelayedTask {
-        private ExecutorService pool;
+        private final ExecutorService pool;
 
         public EndSentinel(int delayInMilliSeconds, ExecutorService pool) {
             super(delayInMilliSeconds);
@@ -85,10 +80,6 @@ public class DelayedTask implements Runnable, Delayed {
 
         @Override
         public void run() {
-            for (DelayedTask task : sequence) {
-                System.out.print(task.summary());
-            }
-            System.out.println();
             System.out.println(this + " Calling shutdownNow()");
             pool.shutdownNow();
         }

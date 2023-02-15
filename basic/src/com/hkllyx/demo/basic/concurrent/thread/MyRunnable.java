@@ -4,7 +4,7 @@ package com.hkllyx.demo.basic.concurrent.thread;
  * @author HKLLY
  * @date 2019-08-21
  */
-public class RunnableDemo implements Runnable {
+public class MyRunnable implements Runnable {
 
     @Override
     public void run() {
@@ -12,6 +12,6 @@ public class RunnableDemo implements Runnable {
     }
 
     public static void main(String[] args) {
-        new Thread(new RunnableDemo()).start();
+        new Thread(new MyRunnable()).start();
     }
 }

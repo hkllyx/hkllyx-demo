@@ -1,7 +1,5 @@
 package com.hkllyx.demo.basic.concurrent.datatransfer.blockingqueue.priorityblockingqueue;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -10,25 +8,19 @@ import java.util.concurrent.ExecutorService;
  */
 public class PrioritizedTask implements Runnable, Comparable<PrioritizedTask> {
     private static int counter = 0;
-    /**
-     * 保存优先级任务
-     */
-    private static List<PrioritizedTask> sequence = new ArrayList<>();
     private final int id = counter++;
     /**
      * 优先级
      */
-    private int priority;
+    private final int priority;
 
     public PrioritizedTask(int priority) {
         this.priority = priority;
-        // 将任务加到列表中
-        sequence.add(this);
     }
 
     @Override
     public void run() {
-        System.out.println(this + " ");
+        System.out.println(this);
     }
 
     @Override
@@ -43,19 +35,10 @@ public class PrioritizedTask implements Runnable, Comparable<PrioritizedTask> {
     }
 
     /**
-     * 简要信息
-     *
-     * @return 简要信息
-     */
-    public String summary() {
-        return "(" + id + ":" + priority + ") ";
-    }
-
-    /**
      * 尾部哨兵，优先级最低
      */
     public static class EndSentinel extends PrioritizedTask {
-        private ExecutorService pool;
+        private final ExecutorService pool;
 
         public EndSentinel(ExecutorService pool) {
             super(-1);
@@ -64,11 +47,6 @@ public class PrioritizedTask implements Runnable, Comparable<PrioritizedTask> {
 
         @Override
         public void run() {
-            // 输出优先级列表
-            for (PrioritizedTask task : sequence) {
-                System.out.print(task.summary());
-            }
-            System.out.println();
             System.out.println(this + " Calling shutdownNow()");
             pool.shutdownNow();
         }

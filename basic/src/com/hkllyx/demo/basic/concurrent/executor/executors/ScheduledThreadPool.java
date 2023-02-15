@@ -1,6 +1,6 @@
 package com.hkllyx.demo.basic.concurrent.executor.executors;
 
-import com.hkllyx.demo.basic.concurrent.thread.DaemonThreadFactoryDemo;
+import com.hkllyx.demo.basic.concurrent.thread.DaemonThreadFactory;
 import com.hkllyx.demo.basic.concurrent.thread.MyThread;
 
 import java.util.concurrent.ExecutorService;
@@ -16,7 +16,7 @@ public class ScheduledThreadPool {
 
     public static void main(String[] args) {
         // ThreadFactory参数可不写
-        ExecutorService pool = Executors.newScheduledThreadPool(5, new DaemonThreadFactoryDemo());
+        ExecutorService pool = Executors.newScheduledThreadPool(5, new DaemonThreadFactory());
         for (int i = 0; i < 5; i++) {
             pool.execute(new MyThread());
         }

@@ -14,19 +14,19 @@ public class ItemPool<T> {
     /**
      * 信号量size
      */
-    private int size;
+    private final int size;
     /**
      * 对象列表
      */
-    private List<T> itemList = new ArrayList<>();
+    private final List<T> itemList = new ArrayList<>();
     /**
      * 对象是否被签出
      */
-    private volatile boolean[] checkedOut;
+    private final boolean[] checkedOut;
     /**
      * 可用信号量
      */
-    private Semaphore available;
+    private final Semaphore available;
 
     public ItemPool(Class<T> clazz, int size) {
         this.size = size;

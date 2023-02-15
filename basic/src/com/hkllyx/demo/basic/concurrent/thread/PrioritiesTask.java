@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
  * @author HKLLY
  * @date 2019/4/9
  */
-public class PrioritiesDemo implements Runnable {
+public class PrioritiesTask implements Runnable {
     private int countDown = 5;
     /**
      * volatile 保证程序不被编译器优化，如果去掉run()中对于d的操作或此关键字
@@ -18,7 +18,7 @@ public class PrioritiesDemo implements Runnable {
     private volatile double d;
     private final int priority;
 
-    public PrioritiesDemo(int priority) {
+    public PrioritiesTask(int priority) {
         this.priority = priority;
     }
 
@@ -47,8 +47,8 @@ public class PrioritiesDemo implements Runnable {
     public static void main(String[] args) {
         ExecutorService exec = Executors.newCachedThreadPool();
         for (int i = 0; i < 5; i++) {
-            exec.execute(new PrioritiesDemo(Thread.MIN_PRIORITY));
-            exec.execute(new PrioritiesDemo(Thread.MAX_PRIORITY));
+            exec.execute(new PrioritiesTask(Thread.MIN_PRIORITY));
+            exec.execute(new PrioritiesTask(Thread.MAX_PRIORITY));
         }
         exec.shutdown();
     }
