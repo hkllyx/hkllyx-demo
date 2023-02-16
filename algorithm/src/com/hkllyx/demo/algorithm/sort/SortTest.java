@@ -14,8 +14,8 @@ public class SortTest {
     private final StopWatch stopWatch;
 
     public static void main(String[] args) {
-        SortTest test = new SortTest(new QuickSort());
-        // test.debug(10, 10);
+        SortTest test = new SortTest(new RadixSort());
+        // test.debug(1000, 10);
         test.run(10, 1000, 200);
     }
 
