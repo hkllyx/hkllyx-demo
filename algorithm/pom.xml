@@ -10,7 +10,7 @@
     </parent>
 
 
-    <artifactId>netty</artifactId>
+    <artifactId>algorithm</artifactId>
 
     <dependencies>
         <dependency>

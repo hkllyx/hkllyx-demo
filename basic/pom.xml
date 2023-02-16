@@ -10,7 +10,7 @@
     </parent>
 
 
-    <artifactId>netty</artifactId>
+    <artifactId>basic</artifactId>
 
     <dependencies>
         <dependency>
