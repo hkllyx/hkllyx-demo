@@ -3,6 +3,8 @@ package com.hkllyx.demo.hibernate.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,11 +19,15 @@ import java.util.Objects;
  */
 @Getter
 @Setter
-@Entity
+@Entity // 实体注释
+@Table(name = "department") // 显示映射数据库表名（采用隐式映射方式时可忽略）
+@DynamicInsert // 动态插入，当字段为null的时候生成SQL时忽略
+@DynamicUpdate // 动态更新，当字段为null的时候生成SQL时忽略
 public class Department {
     /** 主键 */
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id // 指定主键
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 指定主键生成方式
+    @Column(name = "id") // 显示映射数据库字段（采用隐式映射方式时可忽略）
     private Long id;
 
     /** 编码 */
@@ -30,27 +36,23 @@ public class Department {
     /** 名称 */
     private String name;
 
-    /** 父部门编码 */
-    @ManyToOne
+    /** 父部门 */
+    @ManyToOne // 部门多对一父部门
+    @JoinColumn(name = "parent_id", referencedColumnName = "id") // 在@Column的基础上，指定联表查询参考字段
     private Department parentDepartment;
-
-    /** 部长编码 */
-    @ManyToOne
-    @JoinColumn(name = "director_code", referencedColumnName = "code")
-    private Employee director;
 
     /** 注册日期 */
     private LocalDate registerDate;
 
     /** 版本号 */
-    @Version
+    @Version // 版本号，可用于乐观锁
     private Integer version;
 
     /** 管理员 */
-    @ManyToMany
-    @JoinTable(name = "ref_department_manager",
-            joinColumns = {@JoinColumn(name = "department_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "employee_id", referencedColumnName = "id")})
+    @ManyToMany // 部门多对多管理员
+    @JoinTable(name = "ref_department_manager", // 指定关联表名
+            joinColumns = {@JoinColumn(name = "department_id", referencedColumnName = "id")}, // 指定当前表在关联表中的参考字段
+            inverseJoinColumns = {@JoinColumn(name = "employee_id", referencedColumnName = "id")}) // 指定对方表（职员表）在关联表中的参考字段
     @ToString.Exclude
     private List<Employee> managers;
 

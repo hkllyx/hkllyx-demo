@@ -1,19 +1,29 @@
 package com.hkllyx.demo.hibernate;
 
+import com.hkllyx.demo.hibernate.entity.Department;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.cfg.Configuration;
 
+import java.io.Serializable;
+import java.time.LocalDate;
+
 /**
+ * 核心API演示
+ *
  * @author xiaoyong3
  * @date 2023/04/10
  */
-public class ConnectionDemo {
+public class CoreApiDemo {
 
     public static void main(String[] args) {
         // Configuration主要用于管理Hibernate配置信息，以及创建SessionFactory实例
         // 获取配置，默认会读取classpath:hibernate.properties和classpath:hibernate.cfg.xml中的配置（重复配置后者优先级更高）
         Configuration configuration = new Configuration().configure();
+        // 设置隐式命名策略为驼峰转下划线
+        // 注意：hibernate.physical_naming_strategy配置并不生效，需要手动设置
+        configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
 
         // SessionFactory用于读取和解析映射，并负责创建和管理Session对象
         // SessionFactory保存了当前的数据库配置信息、所有映射关系以及Hibernate自动生成的预定义SQL语句，同时它还维护了Hibernate的二级缓存（重量级原因）
@@ -31,6 +41,12 @@ public class ConnectionDemo {
             //   - sessionFactory.openSession()，SessionFactory直接创建一个新的Session实例，且在使用完成后需要调用close()方法进行手动关闭
             //   - sessionFactory.getCurrentSession()，创建的Session实例会被绑定到当前线程中，它在事务提交或回滚后会自动关闭
             try(Session session = sessionFactory.openSession()) {
+                Department department = new Department();
+                department.setCode("D001");
+                department.setName("IT部门");
+                department.setRegisterDate(LocalDate.now());
+                Serializable id = session.save(department);
+                System.out.println(id);
             }
         }
     }

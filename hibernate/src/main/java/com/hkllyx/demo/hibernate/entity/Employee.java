@@ -2,10 +2,10 @@ package com.hkllyx.demo.hibernate.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -17,23 +17,22 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@DynamicInsert
+@DynamicUpdate
 public class Employee {
     /** 主键 */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /** 编码 */
-    private String code;
+    /** 编号 */
+    private String no;
 
     /** 名称 */
     private String name;
 
     /** 性别：0-男；1-女 */
     private Integer gender;
-
-    /** 出生日期 */
-    private LocalDate birth;
 
     /** 手机 */
     private String mobile;
@@ -49,14 +48,8 @@ public class Employee {
     /** 职位 */
     private String title;
 
-    /** 薪资 */
-    private BigDecimal salary;
-
-    /** 入职日期 */
-    private LocalDate onboardDate;
-
-    /** 离职日期 */
-    private LocalDate departureDate;
+    @Embedded
+    private EmployeeExtraInfo extraInfo;
 
     @Override
     public boolean equals(Object o) {
@@ -69,13 +62,13 @@ public class Employee {
 
         if (!Objects.equals(id, employee.id))
             return false;
-        return Objects.equals(code, employee.code);
+        return Objects.equals(no, employee.no);
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (code != null ? code.hashCode() : 0);
+        result = 31 * result + (no != null ? no.hashCode() : 0);
         return result;
     }
 
@@ -83,7 +76,7 @@ public class Employee {
     public String toString() {
         return "Employee{" +
                 "id=" + id +
-                ", code='" + code + '\'' +
+                ", no='" + no + '\'' +
                 '}';
     }
 }
