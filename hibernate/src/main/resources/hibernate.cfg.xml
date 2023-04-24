@@ -7,5 +7,6 @@
         <!-- 实体映射 -->
         <mapping class="com.hkllyx.demo.hibernate.entity.Department"/>
         <mapping class="com.hkllyx.demo.hibernate.entity.Employee"/>
+        <mapping class="com.hkllyx.demo.hibernate.entity.EmployeeExtraInfo"/>
     </session-factory>
 </hibernate-configuration>

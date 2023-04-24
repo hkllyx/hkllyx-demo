@@ -6,29 +6,22 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Embeddable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- * 联系方式
+ * 职员额外信息
  *
  * @author xiaoyong3
  * @date 2023/04/11
  */
 @Getter
 @Setter
-@Embeddable
+@Embeddable // 没有单独的表，不能脱离主表查询，也不能使用@Id注解
 @DynamicInsert
 @DynamicUpdate
-public class EmployeeExtraInfo {
-    /** 主键 */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class EmployeeExtraInfo implements Serializable {
     /** 出生日期 */
     private LocalDate birth;
 

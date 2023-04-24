@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -23,7 +24,7 @@ import java.util.Objects;
 @Table(name = "department") // 显示映射数据库表名（采用隐式映射方式时可忽略）
 @DynamicInsert // 动态插入，当字段为null的时候生成SQL时忽略
 @DynamicUpdate // 动态更新，当字段为null的时候生成SQL时忽略
-public class Department {
+public class Department implements Serializable { // 实体等需要实现Serializable接口
     /** 主键 */
     @Id // 指定主键
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 指定主键生成方式
@@ -37,7 +38,7 @@ public class Department {
     private String name;
 
     /** 父部门 */
-    @ManyToOne // 部门多对一父部门
+    @ManyToOne(fetch = FetchType.LAZY) // 部门多对一父部门
     @JoinColumn(name = "parent_id", referencedColumnName = "id") // 在@Column的基础上，指定联表查询参考字段
     private Department parentDepartment;
 
@@ -50,7 +51,7 @@ public class Department {
 
     /** 管理员 */
     @ManyToMany // 部门多对多管理员
-    @JoinTable(name = "ref_department_manager", // 指定关联表名
+    @JoinTable(name = "department_manager", // 指定关联表名
             joinColumns = {@JoinColumn(name = "department_id", referencedColumnName = "id")}, // 指定当前表在关联表中的参考字段
             inverseJoinColumns = {@JoinColumn(name = "employee_id", referencedColumnName = "id")}) // 指定对方表（职员表）在关联表中的参考字段
     @ToString.Exclude

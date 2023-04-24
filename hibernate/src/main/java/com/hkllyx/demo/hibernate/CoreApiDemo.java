@@ -3,9 +3,12 @@ package com.hkllyx.demo.hibernate;
 import com.hkllyx.demo.hibernate.entity.Department;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.cfg.Configuration;
 
+import javax.transaction.Status;
+import javax.transaction.Synchronization;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -41,12 +44,36 @@ public class CoreApiDemo {
             //   - sessionFactory.openSession()，SessionFactory直接创建一个新的Session实例，且在使用完成后需要调用close()方法进行手动关闭
             //   - sessionFactory.getCurrentSession()，创建的Session实例会被绑定到当前线程中，它在事务提交或回滚后会自动关闭
             try(Session session = sessionFactory.openSession()) {
+                // 开启事务事务
+                Transaction transaction = session.beginTransaction();
+                // 注册事务同步器
+                Synchronization synchronization = new Synchronization() {
+                    @Override
+                    public void beforeCompletion() {
+                        System.out.println("事务完成前处理。。。");
+                    }
+
+                    @Override
+                    public void afterCompletion(int status) {
+                        if (Status.STATUS_COMMITTED == status) {
+                            System.out.println("事务已提交。。。");
+                        } else if (Status.STATUS_ROLLEDBACK == status) {
+                            System.out.println("事务已回滚。。。");
+                        }
+                    }
+                };
+                transaction.registerSynchronization(synchronization);
+
+                // 新增一条数据
                 Department department = new Department();
-                department.setCode("D001");
-                department.setName("IT部门");
+                department.setCode("D003");
+                department.setName("IT部");
                 department.setRegisterDate(LocalDate.now());
                 Serializable id = session.save(department);
-                System.out.println(id);
+                System.out.println(department);
+
+                // 提交事务
+                transaction.commit();
             }
         }
     }

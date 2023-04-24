@@ -6,6 +6,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -19,7 +20,7 @@ import java.util.Objects;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-public class Employee {
+public class Employee implements Serializable {
     /** 主键 */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,15 +42,19 @@ public class Employee {
     private String email;
 
     /** 部门 */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_code", referencedColumnName = "code")
     private Department department;
 
     /** 职位 */
     private String title;
 
-    @Embedded
+    @Embedded // 引入Embeddable对象
     private EmployeeExtraInfo extraInfo;
+
+    /** 版本号 */
+    @Version // 版本号，可用于乐观锁
+    private Integer version;
 
     @Override
     public boolean equals(Object o) {
