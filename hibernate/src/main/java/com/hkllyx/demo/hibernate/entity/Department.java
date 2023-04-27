@@ -32,15 +32,17 @@ public class Department implements Serializable { // 实体等需要实现Serial
     private Long id;
 
     /** 编码 */
+    @Basic  // 用于基础类型以及实现了java.io.Serializable的类型，可省缺
     private String code;
 
     /** 名称 */
+    @Column(name = "name") // 指定命名策略之后可省缺
     private String name;
 
     /** 父部门 */
     @ManyToOne(fetch = FetchType.LAZY) // 部门多对一父部门
     @JoinColumn(name = "parent_id", referencedColumnName = "id") // 在@Column的基础上，指定联表查询参考字段
-    private Department parentDepartment;
+    private Department parent;
 
     /** 注册日期 */
     private LocalDate registerDate;
@@ -83,6 +85,11 @@ public class Department implements Serializable { // 实体等需要实现Serial
         return "Department{" +
                 "id=" + id +
                 ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", parentId=" + (parent == null ? null : parent.id) +
+                ", registerDate=" + registerDate +
+                ", version=" + version +
+                ", managers=" + managers +
                 '}';
     }
 }

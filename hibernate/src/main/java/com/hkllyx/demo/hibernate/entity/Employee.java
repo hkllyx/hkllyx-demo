@@ -1,5 +1,6 @@
 package com.hkllyx.demo.hibernate.entity;
 
+import com.hkllyx.demo.hibernate.enums.Gender;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
@@ -18,6 +19,10 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@NamedQueries({ // 命名查询
+        @NamedQuery(name = "Employee.findAll", query = "select e from Employee e"),
+        @NamedQuery(name = "Employee.updateById", query = "update Employee e set e.name = :name where e.id = :id", lockMode = LockModeType.OPTIMISTIC)
+})
 @DynamicInsert
 @DynamicUpdate
 public class Employee implements Serializable {
@@ -33,7 +38,8 @@ public class Employee implements Serializable {
     private String name;
 
     /** 性别：0-男；1-女 */
-    private Integer gender;
+    @Enumerated // 默认根据enum序号映射
+    private Gender gender;
 
     /** 手机 */
     private String mobile;
@@ -55,6 +61,15 @@ public class Employee implements Serializable {
     /** 版本号 */
     @Version // 版本号，可用于乐观锁
     private Integer version;
+
+    public Employee() {
+    }
+
+    public Employee(Long id, String no, String name) {
+        this.id = id;
+        this.no = no;
+        this.name = name;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -82,6 +97,14 @@ public class Employee implements Serializable {
         return "Employee{" +
                 "id=" + id +
                 ", no='" + no + '\'' +
+                ", name='" + name + '\'' +
+                ", gender=" + gender +
+                ", mobile='" + mobile + '\'' +
+                ", email='" + email + '\'' +
+                ", departmentCode=" + (department == null ? null : department.getCode()) +
+                ", title='" + title + '\'' +
+                ", extraInfo=" + extraInfo +
+                ", version=" + version +
                 '}';
     }
 }

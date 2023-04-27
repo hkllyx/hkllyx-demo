@@ -39,4 +39,16 @@ public class EmployeeExtraInfo implements Serializable {
 
     /** 离职日期 */
     private LocalDate departureDate;
+
+    @Override
+    public String toString() {
+        return "EmployeeExtraInfo{" +
+                "birth=" + birth +
+                ", introduction='" + introduction + '\'' +
+                ", blogUri='" + blogUri + '\'' +
+                ", salary=" + salary +
+                ", onboardDate=" + onboardDate +
+                ", departureDate=" + departureDate +
+                '}';
+    }
 }

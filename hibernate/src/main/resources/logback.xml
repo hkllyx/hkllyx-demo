@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="false">
+    <!-- 应用名称-->
+    <property name="appName" value="java-demo-hibernate"/>
+
+    <!-- 日志格式 -->
+    <property name="LOG_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50}] %m%n"/>
+    <conversionRule conversionWord="tid"
+                    converterClass="org.apache.skywalking.apm.toolkit.log.logback.v1.x.LogbackPatternConverter"/>
+
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!--定义控制台输出格式-->
+        <encoder charset="utf-8">
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- root logger -->
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <!-- 答应sql的参数绑定 -->
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" additivity="false">
+        <level value="TRACE"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+</configuration>

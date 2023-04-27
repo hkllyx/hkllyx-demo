@@ -25,6 +25,7 @@
         <module>basic</module>
         <module>algorithm</module>
         <module>hibernate</module>
+        <module>hibernate-jpa</module>
     </modules>
 
 </project>
