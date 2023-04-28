@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <!-- 可以通过session-factory的name属性读取JNDI资源 -->
+    <session-factory>
+        <!-- 各类属性。也可以通过hibernate.properties来配置 -->
+        <!--<property name="hibernate.connection.driver_class">org.h2.Driver</property>-->
+        <!--<property name="hibernate.connection.url">jdbc:h2:mem:test;MODE=MySQL;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'classpath:h2_init.sql'</property>-->
+        <!--<property name="hibernate.connection.username">sa</property>-->
+        <!--<property name="hibernate.connection.password">root</property>-->
+
+        <!-- 实体映射。也可以通过org.hibernate.boot.MetadataSources配置 -->
+        <mapping class="com.hkllyx.demo.jpa.hibernate.entity.Department"/>
+        <mapping class="com.hkllyx.demo.jpa.hibernate.entity.Employee"/>
+        <mapping class="com.hkllyx.demo.jpa.hibernate.entity.EmployeeExtraInfo"/>
+    </session-factory>
+</hibernate-configuration>

@@ -21,11 +21,10 @@
     </properties>
 
     <modules>
-        <module>netty</module>
         <module>basic</module>
         <module>algorithm</module>
-        <module>hibernate</module>
-        <module>hibernate-jpa</module>
+        <module>jpa-hibernate</module>
+        <module>netty</module>
     </modules>
 
 </project>
