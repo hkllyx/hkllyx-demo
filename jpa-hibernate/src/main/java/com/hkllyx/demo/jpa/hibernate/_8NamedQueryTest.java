@@ -5,6 +5,7 @@ import com.hkllyx.demo.jpa.hibernate.util.HibernateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -15,9 +16,10 @@ import java.util.List;
  * @date 2023/04/25
  */
 @Slf4j
-public class NamedQueryDemo {
+public class _8NamedQueryTest {
 
-    public static void main(String[] args) {
+    @Test
+    void findAll() {
         try (Session session = HibernateUtil.newSession()) {
             Query<Employee> namedQuery = session.getNamedQuery("Employee.findAll");
             List<Employee> result = namedQuery.list();

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -32,6 +33,7 @@ public class Employee implements Serializable {
     private Long id;
 
     /** 编号 */
+    @NaturalId
     private String no;
 
     /** 名称 */
@@ -98,13 +100,6 @@ public class Employee implements Serializable {
                 "id=" + id +
                 ", no='" + no + '\'' +
                 ", name='" + name + '\'' +
-                ", gender=" + gender +
-                ", mobile='" + mobile + '\'' +
-                ", email='" + email + '\'' +
-                ", departmentCode=" + (department == null ? null : department.getCode()) +
-                ", title='" + title + '\'' +
-                ", extraInfo=" + extraInfo +
-                ", version=" + version +
                 '}';
     }
 }

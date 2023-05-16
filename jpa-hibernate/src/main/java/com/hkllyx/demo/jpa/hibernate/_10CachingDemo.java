@@ -9,11 +9,11 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2023/04/25
  */
 @Slf4j
-public class CacheDemo {
+public class _10CachingDemo {
 
     public static void main(String[] args) {
-        /* hibernate缓存结构
-         * database --- first-level cache --- session
+        /*
+         * hibernate缓存结构: first-level cache (session) --> second-level cache (session factory) --> database
          */
     }
 }

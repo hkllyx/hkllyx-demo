@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 /**
  * Hibernate原生启动演示
  *
+ * @see <a href="https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html">Hibernate User Guide</a>
  * @author xiaoyong3
  * @date 2023/04/10
  */
@@ -17,7 +18,7 @@ public class _1NativeBootstrappingDemo {
 
     public static void main(String[] args) {
         /*
-        更多见HibernateUtil的JavaDoc一个简要完整的演示：
+        更多见HibernateUtil的JavaDoc，一个简要完整的演示：
         try (StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().configure().build()) {
             MetadataSources metadataSources = new MetadataSources(serviceRegistry);
             Metadata metadata = metadataSources.buildMetadata();
@@ -41,7 +42,7 @@ public class _1NativeBootstrappingDemo {
                 transaction.commit();
             } catch (Exception e) {
                 // 异常回滚事务
-                if (transaction.isActive()) {
+                if (transaction.isActive() || transaction.getRollbackOnly()) {
                     transaction.rollback();
                 }
                 throw e;

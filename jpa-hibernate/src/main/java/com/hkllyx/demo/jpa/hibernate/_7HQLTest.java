@@ -16,7 +16,7 @@ import java.util.Arrays;
  * @date 2023/04/24
  */
 @Slf4j
-public class _5HQLTest {
+public class _7HQLTest {
 
     public static void main(String[] args) {
         try (Session session = HibernateUtil.newSession()) {

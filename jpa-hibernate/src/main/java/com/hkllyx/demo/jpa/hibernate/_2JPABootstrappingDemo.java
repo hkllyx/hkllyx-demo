@@ -10,6 +10,7 @@ import javax.persistence.EntityTransaction;
 /**
  * JPA启动（Jakarta Persistence Bootstrapping）演示
  *
+ * @see <a href="https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html">Hibernate User Guide</a>
  * @author xiaoyong3
  * @date 2023/04/10
  */
@@ -41,12 +42,13 @@ public class _2JPABootstrappingDemo {
                 transaction.commit();
             } catch (Exception e) {
                 // 异常回滚事务
-                if (transaction.isActive()) {
+                if (transaction.isActive() || transaction.getRollbackOnly()) {
                     transaction.rollback();
                 }
                 throw e;
             }
         } finally {
+            entityManager.close();
             JPAUtil.close();
         }
     }

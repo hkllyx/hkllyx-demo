@@ -3,9 +3,11 @@ package com.hkllyx.demo.jpa.hibernate.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -22,17 +24,20 @@ import java.util.Objects;
 @Setter
 @Entity // 实体注释
 @Table(name = "department") // 显示映射数据库表名（采用隐式映射方式时可忽略）以及设置表的约束和索引
+@OptimisticLocking(type = OptimisticLockType.VERSION) // 乐观锁方式，默认就是version，可省略
 @DynamicInsert // 动态插入，当字段为null的时候生成SQL时忽略
 @DynamicUpdate // 动态更新，当字段为null的时候生成SQL时忽略
+@Slf4j
 public class Department implements Serializable { // 实体等需要实现Serializable接口
     /** 主键 */
     @Id // 指定主键
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // 指定主键生成方式
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 指定主键生成方式为数据库自动生成
     @Column(name = "id") // 显示映射数据库字段（采用隐式映射方式时可忽略）
     private Long id;
 
     /** 编码 */
     @Basic  // 用于基础类型以及实现了java.io.Serializable的类型，可省缺
+    @NaturalId // 自然ID，一个实体可以有多个
     private String code;
 
     /** 名称 */
@@ -46,6 +51,10 @@ public class Department implements Serializable { // 实体等需要实现Serial
 
     /** 注册日期 */
     private LocalDate registerDate;
+
+    /** 注册时长 */
+    @Transient // 表明字段不需要持久化
+    private long registerDays;
 
     /** 版本号 */
     @Version // 版本号，可用于乐观锁
@@ -86,10 +95,12 @@ public class Department implements Serializable { // 实体等需要实现Serial
                 "id=" + id +
                 ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
-                ", parentId=" + (parent == null ? null : parent.id) +
-                ", registerDate=" + registerDate +
-                ", version=" + version +
-                ", managers=" + managers +
                 '}';
+    }
+
+    @PostLoad // 加载后回调方法，类似的还有：PrePersist、PreRemove、PostPersist、PostRemove、PreUpdate、PostUpdate
+    public void initRegisterDays() {
+        log.warn("<<< PostLoad: initRegisterDays >>>");
+        this.setRegisterDays(this.getRegisterDate().toEpochDay());
     }
 }
